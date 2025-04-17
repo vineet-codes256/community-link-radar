@@ -24,6 +24,8 @@ export function ThemeProvider({
     <NextThemesProvider
       defaultTheme={defaultTheme}
       storageKey={storageKey}
+      enableSystem={true}
+      enableColorScheme={true}
       {...props}
     >
       {children}
