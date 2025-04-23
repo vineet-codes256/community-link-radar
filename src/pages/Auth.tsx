@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
+import CreateProfile from "./CreateProfile";
 
 type AuthMode = "login" | "signup";
 
@@ -20,13 +20,23 @@ const Auth = () => {
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session?.user) {
-        navigate("/", { replace: true });
-        toast({
-          title: "Welcome!",
-          description: `Logged in as ${session.user.email}`,
-        });
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("full_name")
+          .eq("id", session.user.id)
+          .single();
+
+        if (!profile || !profile.full_name) {
+          navigate("/create-profile", { replace: true });
+        } else {
+          navigate("/", { replace: true });
+          toast({
+            title: "Welcome!",
+            description: `Logged in as ${session.user.email}`,
+          });
+        }
       }
     });
     return () => subscription.unsubscribe();

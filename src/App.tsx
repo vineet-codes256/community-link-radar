@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +13,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import ProtectedRoute from "./components/ProtectedRoute";
+import CreateProfile from "./pages/CreateProfile";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +26,7 @@ const App = () => (
           <Sonner />
           <Routes>
             <Route path="/auth" element={<Auth />} />
+            <Route path="/create-profile" element={<CreateProfile />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<Index />} />
