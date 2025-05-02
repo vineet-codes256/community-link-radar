@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { MapPin, Users } from "lucide-react";
+import { MapPin, Users, Compass, UserRound, Percent } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +10,7 @@ import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { Search } from "@/components/ui/search";
-import { calculateDistance, formatDistance } from "@/utils/locationUtils";
+import { calculateDistance, formatDistance, calculateInterestMatch, formatMatchPercentage } from "@/utils/locationUtils";
 
 // Define user type for type safety
 type NearbyUser = {
@@ -23,24 +23,20 @@ type NearbyUser = {
   bio: string;
   latitude: number;
   longitude: number;
+  matchPercentage: number;
+  formatted_match: string;
 };
 
 const Discover = () => {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [searchRadius, setSearchRadius] = useState([5]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentLocation, setCurrentLocation] = useState<{latitude: number, longitude: number} | null>(null);
   const [nearbyUsers, setNearbyUsers] = useState<NearbyUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [locationName, setLocationName] = useState("Unknown location");
+  const [sortBy, setSortBy] = useState<'distance' | 'match'>('distance');
   
-  // Temporary interests for demo
-  const interestOptions = [
-    "Photography", "Hiking", "Cooking", "Tech", "Gaming", 
-    "Movies", "Fitness", "Reading", "Travel", "Music", 
-    "Coffee", "Cycling", "Art", "Food", "Pets"
-  ];
-
   // Get current user's location on component mount
   useEffect(() => {
     const fetchCurrentUserLocation = async () => {
@@ -135,6 +131,15 @@ const Discover = () => {
 
       setLoading(true);
       try {
+        // Get current user's interests
+        const { data: currentUserData } = await supabase
+          .from("profiles")
+          .select("interests")
+          .eq("id", user.id)
+          .single();
+          
+        const userInterests = currentUserData?.interests || [];
+
         // Get all user locations and then filter by distance
         const { data: allLocations, error } = await supabase
           .from("user_locations")
@@ -144,7 +149,9 @@ const Discover = () => {
               id,
               full_name,
               username,
-              avatar_url
+              avatar_url,
+              interests,
+              bio
             )
           `)
           .neq("user_id", user.id) // Exclude current user
@@ -172,11 +179,9 @@ const Discover = () => {
               loc.longitude
             );
             
-            // Generate random interests for demo (in a real app, these would come from the database)
-            const randomInterests = Array.from({ length: Math.floor(Math.random() * 3) + 1 }, 
-              () => interestOptions[Math.floor(Math.random() * interestOptions.length)]
-            );
-            const uniqueInterests = [...new Set(randomInterests)];
+            // Calculate interest match percentage
+            const otherInterests = loc.profiles.interests || [];
+            const matchPercentage = calculateInterestMatch(userInterests, otherInterests);
             
             return {
               id: loc.profiles.id,
@@ -184,17 +189,26 @@ const Discover = () => {
               avatar: loc.profiles.avatar_url || "",
               distance,
               formatted_distance: formatDistance(distance),
-              // These would come from the database in a real application
-              interests: uniqueInterests,
-              bio: `User near ${loc.profiles.username || "unknown location"}`,
+              interests: loc.profiles.interests || [],
+              bio: loc.profiles.bio || `User near ${loc.profiles.username || "unknown location"}`,
               latitude: loc.latitude,
-              longitude: loc.longitude
+              longitude: loc.longitude,
+              matchPercentage,
+              formatted_match: formatMatchPercentage(matchPercentage)
             };
           })
-          .filter((user) => user.distance <= searchRadius[0])
-          .sort((a, b) => a.distance - b.distance);
+          .filter((user) => user.distance <= searchRadius[0]);
 
-        setNearbyUsers(usersWithDistance);
+        // Sort users based on selected sort criteria
+        const sortedUsers = [...usersWithDistance].sort((a, b) => {
+          if (sortBy === 'distance') {
+            return a.distance - b.distance;
+          } else {
+            return b.matchPercentage - a.matchPercentage;
+          }
+        });
+
+        setNearbyUsers(sortedUsers);
       } catch (err) {
         console.error("Error processing nearby users:", err);
       } finally {
@@ -203,7 +217,7 @@ const Discover = () => {
     };
 
     fetchNearbyUsers();
-  }, [currentLocation, searchRadius, user]);
+  }, [currentLocation, searchRadius, user, sortBy]);
 
   // Filter users based on search term
   const filteredUsers = nearbyUsers.filter(user => 
@@ -221,19 +235,64 @@ const Discover = () => {
     // In a real app, this would send a connection request to the backend
   };
 
+  // Handle refresh location
+  const handleRefreshLocation = () => {
+    if (navigator.geolocation) {
+      toast({
+        title: "Updating location",
+        description: "Please wait while we update your location..."
+      });
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          };
+          setCurrentLocation(coords);
+          saveLocationToDatabase(coords);
+          
+          toast({
+            title: "Location updated",
+            description: "Your location has been refreshed successfully."
+          });
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          toast({ 
+            variant: "destructive",
+            title: "Location error", 
+            description: "We couldn't update your location. Please check your browser settings." 
+          });
+        }
+      );
+    }
+  };
+
   return (
     <div className="container py-8 animate-fade-in">
       <div className="flex flex-col gap-6">
         <div className="space-y-4">
-          <h1 className="text-3xl font-bold">Discover People Nearby</h1>
-          <p className="text-muted-foreground">Find and connect with interesting people in your vicinity</p>
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl font-bold">Find Your People</h1>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleRefreshLocation} 
+              className="flex items-center gap-2"
+            >
+              <Compass className="h-4 w-4" />
+              Update Location
+            </Button>
+          </div>
+          <p className="text-muted-foreground">Discover people nearby who share your interests</p>
           
           <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-card rounded-lg p-4 my-6 shadow-sm gap-4">
             <div className="flex items-center">
               <MapPin className="h-5 w-5 text-primary mr-2" />
               <span>Current location: <span className="font-medium">{locationName}</span></span>
             </div>
-            <div className="flex flex-col md:flex-row md:items-center gap-2">
+            <div className="flex flex-col md:flex-row md:items-center gap-3">
               <span className="text-sm text-muted-foreground whitespace-nowrap">Search radius: {searchRadius[0]}km</span>
               <div className="w-full md:w-48">
                 <Slider
@@ -246,13 +305,36 @@ const Discover = () => {
             </div>
           </div>
           
-          <div className="w-full mb-4">
-            <Search 
-              placeholder="Search people, interests..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)} 
-              className="w-full" 
-            />
+          <div className="flex flex-col sm:flex-row gap-4 items-center">
+            <div className="w-full">
+              <Search 
+                placeholder="Search people, interests..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)} 
+                className="w-full" 
+              />
+            </div>
+            <div className="flex items-center space-x-2 whitespace-nowrap">
+              <span className="text-sm">Sort by:</span>
+              <div className="flex bg-muted rounded-md p-1">
+                <Button 
+                  variant={sortBy === 'distance' ? 'default' : 'ghost'} 
+                  size="sm" 
+                  onClick={() => setSortBy('distance')}
+                  className="text-xs h-8"
+                >
+                  <MapPin className="h-3 w-3 mr-1" /> Distance
+                </Button>
+                <Button 
+                  variant={sortBy === 'match' ? 'default' : 'ghost'} 
+                  size="sm" 
+                  onClick={() => setSortBy('match')}
+                  className="text-xs h-8"
+                >
+                  <Percent className="h-3 w-3 mr-1" /> Match
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -262,8 +344,10 @@ const Discover = () => {
           </div>
         ) : filteredUsers.length === 0 ? (
           <div className="text-center py-12">
+            <UserRound className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
             <p className="text-lg mb-2">No people found nearby</p>
             <p className="text-muted-foreground">Try increasing your search radius or check back later</p>
+            <Button className="mt-6" onClick={handleRefreshLocation}>Refresh Location</Button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -280,6 +364,11 @@ const Discover = () => {
                       <MapPin className="h-3 w-3 mr-1" /> {user.formatted_distance}
                     </CardDescription>
                   </div>
+                  <Badge 
+                    className={`ml-auto ${user.matchPercentage > 50 ? 'bg-green-500 hover:bg-green-600' : ''}`}
+                  >
+                    {user.formatted_match}
+                  </Badge>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-sm">{user.bio}</p>

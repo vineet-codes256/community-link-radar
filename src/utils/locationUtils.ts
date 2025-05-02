@@ -47,3 +47,42 @@ export const formatDistance = (distance: number): string => {
     return `${distance.toFixed(1)} km`;
   }
 };
+
+/**
+ * Calculate match score between user interests
+ * @param userInterests User's interests array
+ * @param otherInterests Other person's interests array
+ * @returns Match score as a percentage (0-100)
+ */
+export const calculateInterestMatch = (userInterests: string[], otherInterests: string[]): number => {
+  if (!userInterests.length || !otherInterests.length) return 0;
+  
+  // Find common interests
+  const commonInterests = userInterests.filter(interest => 
+    otherInterests.some(otherInterest => 
+      otherInterest.toLowerCase() === interest.toLowerCase()
+    )
+  );
+  
+  // Calculate percentage match
+  const matchPercentage = Math.round((commonInterests.length / Math.max(userInterests.length, otherInterests.length)) * 100);
+  
+  return matchPercentage;
+};
+
+/**
+ * Format match percentage in a user-friendly way
+ * @param matchPercentage Match percentage (0-100)
+ * @returns Formatted match string with emoji indicator
+ */
+export const formatMatchPercentage = (matchPercentage: number): string => {
+  if (matchPercentage >= 75) {
+    return `${matchPercentage}% match 🔥`; // High match
+  } else if (matchPercentage >= 50) {
+    return `${matchPercentage}% match ✨`; // Good match
+  } else if (matchPercentage >= 25) {
+    return `${matchPercentage}% match ⭐`; // Moderate match
+  } else {
+    return `${matchPercentage}% match`; // Low match
+  }
+};
