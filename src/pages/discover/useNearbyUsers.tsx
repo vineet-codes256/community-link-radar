@@ -25,14 +25,14 @@ export const useNearbyUsers = (
 
       setLoading(true);
       try {
-        // Get current user's interests
+        // Get current user's interests - default to empty array if not available
         const { data: currentUserData } = await supabase
           .from("profiles")
-          .select("interests")
+          .select("*") // Selecting all fields since we're not sure which exist
           .eq("id", user.id)
           .single();
           
-        const userInterests = currentUserData?.interests || [];
+        const userInterests = currentUserData?.interests as string[] || [];
 
         // Get all user locations and then filter by distance
         const { data: allLocations, error } = await supabase
@@ -44,7 +44,6 @@ export const useNearbyUsers = (
               full_name,
               username,
               avatar_url,
-              interests,
               bio
             )
           `)
@@ -75,7 +74,8 @@ export const useNearbyUsers = (
             
             // Calculate interest match percentage
             const profileData = loc.profiles;
-            const otherInterests = profileData?.interests || [];
+            // Default to empty array if interests don't exist
+            const otherInterests = (profileData?.interests as string[]) || [];
             const matchPercentage = calculateInterestMatch(userInterests, otherInterests);
             
             return {
@@ -84,7 +84,7 @@ export const useNearbyUsers = (
               avatar: profileData?.avatar_url || "",
               distance,
               formatted_distance: formatDistance(distance),
-              interests: profileData?.interests || [],
+              interests: otherInterests,
               bio: profileData?.bio || `User near ${profileData?.username || "unknown location"}`,
               latitude: loc.latitude,
               longitude: loc.longitude,
