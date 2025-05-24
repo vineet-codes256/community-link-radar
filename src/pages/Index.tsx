@@ -1,10 +1,12 @@
-
 import { Link } from "react-router-dom";
-import { ArrowRight, MapPin, Users, Calendar, Building, Lock, Search } from "lucide-react";
+import { ArrowRight, MapPin, Users, Calendar, Building, Lock, Search, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Mock data for testimonials
 const testimonials = [
@@ -32,6 +34,45 @@ const testimonials = [
 ];
 
 const Index = () => {
+  const navigate = useNavigate();
+  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
+  
+  // Handle the "Find your people" button click
+  const handleFindPeople = () => {
+    setIsLoadingLocation(true);
+    
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // Successfully got location
+          setIsLoadingLocation(false);
+          navigate("/discover");
+          toast({
+            title: "Location detected",
+            description: "We'll show you people nearby who match your interests.",
+          });
+        },
+        (error) => {
+          // Failed to get location
+          setIsLoadingLocation(false);
+          console.error("Geolocation error:", error);
+          toast({
+            variant: "destructive",
+            title: "Location access denied",
+            description: "Please enable location access to find people nearby.",
+          });
+        }
+      );
+    } else {
+      setIsLoadingLocation(false);
+      toast({
+        variant: "destructive",
+        title: "Location not supported",
+        description: "Your browser doesn't support geolocation.",
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -48,8 +89,23 @@ const Index = () => {
               Discover nearby people, events, and businesses. Build meaningful connections within your neighborhood.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6 animate-fade-in" style={{ animationDelay: "400ms" }}>
-              <Button asChild size="lg">
-                <Link to="/discover">Explore Nearby</Link>
+              <Button 
+                onClick={handleFindPeople}
+                size="lg"
+                disabled={isLoadingLocation}
+                className="bg-primary hover:bg-primary/90"
+              >
+                {isLoadingLocation ? (
+                  <>
+                    <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-t-transparent"></span>
+                    Finding your location...
+                  </>
+                ) : (
+                  <>
+                    <UserRound className="mr-2" />
+                    Find your people
+                  </>
+                )}
               </Button>
               <Button variant="outline" size="lg">
                 Learn More
