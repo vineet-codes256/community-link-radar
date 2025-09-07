@@ -1,3 +1,5 @@
+// Copyright © 2025 Rawat Innovations Private Limited. All rights reserved.
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";

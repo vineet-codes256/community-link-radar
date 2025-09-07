@@ -1,4 +1,6 @@
 
+// Copyright © 2025 Rawat Innovations Private Limited. All rights reserved.
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MapPin, Search, Users, Calendar, User } from "lucide-react";

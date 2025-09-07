@@ -9,6 +9,9 @@ const MainLayout = () => {
       <main className="flex-grow">
         <Outlet />
       </main>
+      <footer className="bg-gray-100 dark:bg-gray-800 text-center py-4 text-sm text-gray-600 dark:text-gray-400">
+        © 2025 Rawat Innovations Private Limited. All rights reserved.
+      </footer>
     </div>
   );
 };

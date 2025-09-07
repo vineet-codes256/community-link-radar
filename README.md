@@ -52,3 +52,7 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+
+## Copyright
+
+All copyrights are reserved with Rawat Innovations Private Limited.
