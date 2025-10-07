@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
 import { useAuth } from '@/hooks/use-auth';
@@ -11,13 +11,27 @@ export const useLocationData = () => {
   } | null>(null);
   const [locationName, setLocationName] = useState('Unknown location');
 
-  // Get current user's location on component mount
-  useEffect(() => {
-    fetchCurrentUserLocation();
-  }, [user]);
+  // Save detected location to database
+  const saveLocationToDatabase = useCallback(
+    async (coords: { latitude: number; longitude: number }) => {
+      if (!user) return;
+
+      const { error } = await supabase.from('user_locations').upsert({
+        user_id: user.id,
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+        is_visible: true,
+      });
+
+      if (error) {
+        console.error('Error saving location:', error);
+      }
+    },
+    [user]
+  );
 
   // Fetch current user location
-  const fetchCurrentUserLocation = async () => {
+  const fetchCurrentUserLocation = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -76,23 +90,12 @@ export const useLocationData = () => {
     } catch (error) {
       console.error('Error in location fetch:', error);
     }
-  };
+  }, [user, saveLocationToDatabase]);
 
-  // Save detected location to database
-  const saveLocationToDatabase = async (coords: { latitude: number; longitude: number }) => {
-    if (!user) return;
-
-    const { error } = await supabase.from('user_locations').upsert({
-      user_id: user.id,
-      latitude: coords.latitude,
-      longitude: coords.longitude,
-      is_visible: true,
-    });
-
-    if (error) {
-      console.error('Error saving location:', error);
-    }
-  };
+  // Get current user's location on component mount
+  useEffect(() => {
+    fetchCurrentUserLocation();
+  }, [fetchCurrentUserLocation]);
 
   // Handle refresh location
   const handleRefreshLocation = () => {
