@@ -1,12 +1,11 @@
-
-import { MapPin, Pencil, Settings, Globe, Calendar, Mail, ShieldCheck } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
+import { MapPin, Pencil, Settings, Globe, Calendar, Mail, ShieldCheck } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 
 const Profile = () => {
   return (
@@ -14,17 +13,21 @@ const Profile = () => {
       <div className="flex flex-col gap-6">
         <Card className="border-none shadow-sm overflow-hidden">
           <div className="h-48 bg-gradient-to-r from-primary/50 to-primary relative">
-            <Button variant="ghost" size="icon" className="absolute top-4 right-4 bg-background/20 hover:bg-background/30 backdrop-blur-sm text-white">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-4 right-4 bg-background/20 hover:bg-background/30 backdrop-blur-sm text-white"
+            >
               <Pencil className="h-4 w-4" />
             </Button>
           </div>
-          
+
           <div className="px-6 pb-6 pt-0">
             <div className="flex flex-col md:flex-row gap-6 items-start md:items-end relative">
               <Avatar className="h-32 w-32 border-4 border-background -mt-16 bg-background">
                 <AvatarFallback className="text-4xl">AS</AvatarFallback>
               </Avatar>
-              
+
               <div className="space-y-1 flex-1">
                 <h1 className="text-3xl font-bold">Ananya Singh</h1>
                 <div className="flex items-center text-muted-foreground">
@@ -32,7 +35,7 @@ const Profile = () => {
                   <span>Koramangala, Bengaluru</span>
                 </div>
               </div>
-              
+
               <div className="flex flex-wrap gap-2 md:flex-nowrap">
                 <Button variant="outline">
                   <Settings className="h-4 w-4 mr-2" />
@@ -43,7 +46,7 @@ const Profile = () => {
             </div>
           </div>
         </Card>
-        
+
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full md:w-1/3 space-y-6">
             <Card>
@@ -51,8 +54,11 @@ const Profile = () => {
                 <CardTitle className="text-lg">About</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p>Passionate software developer, coffee lover, and avid hiker. New to Bengaluru and looking to connect with like-minded individuals.</p>
-                
+                <p>
+                  Passionate software developer, coffee lover, and avid hiker. New to Bengaluru and
+                  looking to connect with like-minded individuals.
+                </p>
+
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <Globe className="h-4 w-4 text-muted-foreground" />
@@ -69,7 +75,7 @@ const Profile = () => {
                 </div>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Interests</CardTitle>
@@ -89,7 +95,7 @@ const Profile = () => {
               </CardContent>
             </Card>
           </div>
-          
+
           <div className="w-full md:w-2/3">
             <Tabs defaultValue="connections">
               <TabsList className="mb-4">
@@ -97,7 +103,7 @@ const Profile = () => {
                 <TabsTrigger value="posts">Posts</TabsTrigger>
                 <TabsTrigger value="events">Events</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="connections" className="mt-0">
                 <Card>
                   <CardHeader>
@@ -108,31 +114,39 @@ const Profile = () => {
                         <span className="text-sm text-muted-foreground">Privacy: Only You</span>
                       </div>
                     </div>
-                    <CardDescription>People you've connected with through Nearby Connect</CardDescription>
+                    <CardDescription>
+                      People you've connected with through Nearby Connect
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <ScrollArea className="h-[400px] pr-4">
                       <div className="space-y-4">
-                        {Array(8).fill(0).map((_, i) => (
-                          <div key={i} className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                              <Avatar>
-                                <AvatarFallback>U{i+1}</AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <p className="font-medium">User {i+1}</p>
-                                <p className="text-sm text-muted-foreground">Koramangala • Connected 2 days ago</p>
+                        {Array(8)
+                          .fill(0)
+                          .map((_, i) => (
+                            <div key={i} className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <Avatar>
+                                  <AvatarFallback>U{i + 1}</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                  <p className="font-medium">User {i + 1}</p>
+                                  <p className="text-sm text-muted-foreground">
+                                    Koramangala • Connected 2 days ago
+                                  </p>
+                                </div>
                               </div>
+                              <Button variant="ghost" size="sm">
+                                View
+                              </Button>
                             </div>
-                            <Button variant="ghost" size="sm">View</Button>
-                          </div>
-                        ))}
+                          ))}
                       </div>
                     </ScrollArea>
                   </CardContent>
                 </Card>
               </TabsContent>
-              
+
               <TabsContent value="posts" className="mt-0">
                 <Card>
                   <CardHeader>
@@ -147,7 +161,7 @@ const Profile = () => {
                   </CardContent>
                 </Card>
               </TabsContent>
-              
+
               <TabsContent value="events" className="mt-0">
                 <Card>
                   <CardHeader>
@@ -167,7 +181,9 @@ const Profile = () => {
                               </div>
                               <div className="flex-1">
                                 <p className="font-medium">Weekend Farmers Market</p>
-                                <p className="text-sm text-muted-foreground">Cubbon Park • 9:00 AM</p>
+                                <p className="text-sm text-muted-foreground">
+                                  Cubbon Park • 9:00 AM
+                                </p>
                               </div>
                               <Badge>Attending</Badge>
                             </div>
@@ -185,7 +201,7 @@ const Profile = () => {
                             </div>
                           </div>
                         </div>
-                        
+
                         <div>
                           <h3 className="font-medium mb-3">Past</h3>
                           <div className="space-y-4">
@@ -196,7 +212,9 @@ const Profile = () => {
                               </div>
                               <div className="flex-1">
                                 <p className="font-medium">Local Book Club Meeting</p>
-                                <p className="text-sm text-muted-foreground">City Library • 4:00 PM</p>
+                                <p className="text-sm text-muted-foreground">
+                                  City Library • 4:00 PM
+                                </p>
                               </div>
                               <Badge variant="outline">Attended</Badge>
                             </div>

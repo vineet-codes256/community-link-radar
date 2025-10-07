@@ -1,75 +1,87 @@
 // Copyright © 2025 Rawat Innovations Private Limited. All rights reserved.
 
-import { Link } from "react-router-dom";
-import { ArrowRight, MapPin, Users, Calendar, Building, Lock, Search, UserRound } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "@/hooks/use-toast";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import {
+  ArrowRight,
+  MapPin,
+  Users,
+  Calendar,
+  Building,
+  Lock,
+  Search,
+  UserRound,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { toast } from '@/hooks/use-toast';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Mock data for testimonials
 const testimonials = [
   {
     id: 1,
-    name: "Rahul Sharma",
-    avatar: "",
-    location: "Mumbai",
-    quote: "I moved to a new city and Nearby Connect helped me find like-minded people in my neighborhood. Made some great friends!"
+    name: 'Rahul Sharma',
+    avatar: '',
+    location: 'Mumbai',
+    quote:
+      'I moved to a new city and Nearby Connect helped me find like-minded people in my neighborhood. Made some great friends!',
   },
   {
     id: 2,
-    name: "Priya Patel",
-    avatar: "",
-    location: "Bengaluru",
-    quote: "As a small business owner, I can connect with my local community and share promotions. It's been great for business!"
+    name: 'Priya Patel',
+    avatar: '',
+    location: 'Bengaluru',
+    quote:
+      "As a small business owner, I can connect with my local community and share promotions. It's been great for business!",
   },
   {
     id: 3,
-    name: "Vikram Singh",
-    avatar: "",
-    location: "Delhi",
-    quote: "I discovered a cycling group just 2km from my house! Now we meet every weekend for rides. Amazing platform!"
-  }
+    name: 'Vikram Singh',
+    avatar: '',
+    location: 'Delhi',
+    quote:
+      'I discovered a cycling group just 2km from my house! Now we meet every weekend for rides. Amazing platform!',
+  },
 ];
 
 const Index = () => {
   const navigate = useNavigate();
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
-  
+
   // Handle the "Find your people" button click
   const handleFindPeople = () => {
     setIsLoadingLocation(true);
-    
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        position => {
           // Successfully got location
           setIsLoadingLocation(false);
-          navigate("/discover");
+          navigate('/discover');
           toast({
-            title: "Location detected",
+            title: 'Location detected',
             description: "We'll show you people nearby who match your interests.",
           });
         },
-        (error) => {
+        error => {
           // Failed to get location
           setIsLoadingLocation(false);
-          console.error("Geolocation error:", error);
+          console.error('Geolocation error:', error);
           toast({
-            variant: "destructive",
-            title: "Location access denied",
-            description: "Please enable location access to find people nearby.",
+            variant: 'destructive',
+            title: 'Location access denied',
+            description: 'Please enable location access to find people nearby.',
           });
         }
       );
     } else {
       setIsLoadingLocation(false);
       toast({
-        variant: "destructive",
-        title: "Location not supported",
+        variant: 'destructive',
+        title: 'Location not supported',
         description: "Your browser doesn't support geolocation.",
       });
     }
@@ -81,17 +93,24 @@ const Index = () => {
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 -z-10" />
         <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-background to-transparent z-0" />
-        
+
         <div className="container relative z-10">
           <div className="flex flex-col gap-6 max-w-2xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight animate-fade-in">
               Connect with your <span className="text-primary">local community</span>
             </h1>
-            <p className="text-xl text-muted-foreground animate-fade-in" style={{ animationDelay: "200ms" }}>
-              Discover nearby people, events, and businesses. Build meaningful connections within your neighborhood.
+            <p
+              className="text-xl text-muted-foreground animate-fade-in"
+              style={{ animationDelay: '200ms' }}
+            >
+              Discover nearby people, events, and businesses. Build meaningful connections within
+              your neighborhood.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6 animate-fade-in" style={{ animationDelay: "400ms" }}>
-              <Button 
+            <div
+              className="flex flex-col sm:flex-row gap-4 justify-center mt-6 animate-fade-in"
+              style={{ animationDelay: '400ms' }}
+            >
+              <Button
                 onClick={handleFindPeople}
                 size="lg"
                 disabled={isLoadingLocation}
@@ -114,11 +133,11 @@ const Index = () => {
               </Button>
             </div>
           </div>
-          
+
           <div className="mt-16 md:mt-24 relative">
             <div className="absolute -top-12 -left-12 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
             <div className="absolute -bottom-8 -right-8 w-60 h-60 bg-secondary/10 rounded-full blur-3xl" />
-            
+
             <div className="bg-card border rounded-xl shadow-lg overflow-hidden p-2 relative">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2 relative z-10">
                 {/* Discovery Panel */}
@@ -142,7 +161,9 @@ const Index = () => {
                         <div className="font-medium">Priya S.</div>
                         <div className="text-xs text-muted-foreground">500m away</div>
                       </div>
-                      <Badge className="ml-auto" variant="outline">Art</Badge>
+                      <Badge className="ml-auto" variant="outline">
+                        Art
+                      </Badge>
                     </div>
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8">
@@ -152,7 +173,9 @@ const Index = () => {
                         <div className="font-medium">Rahul M.</div>
                         <div className="text-xs text-muted-foreground">1.2km away</div>
                       </div>
-                      <Badge className="ml-auto" variant="outline">Tech</Badge>
+                      <Badge className="ml-auto" variant="outline">
+                        Tech
+                      </Badge>
                     </div>
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8">
@@ -162,11 +185,13 @@ const Index = () => {
                         <div className="font-medium">Anita K.</div>
                         <div className="text-xs text-muted-foreground">1.8km away</div>
                       </div>
-                      <Badge className="ml-auto" variant="outline">Food</Badge>
+                      <Badge className="ml-auto" variant="outline">
+                        Food
+                      </Badge>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Community Panel */}
                 <div className="bg-muted/50 rounded-lg p-4 flex flex-col">
                   <div className="flex items-center mb-3">
@@ -183,9 +208,13 @@ const Index = () => {
                         </Avatar>
                         <div className="text-sm font-medium">Meera J.</div>
                       </div>
-                      <p className="text-sm">Does anyone know a good plumber in Koramangala? Need urgent help!</p>
+                      <p className="text-sm">
+                        Does anyone know a good plumber in Koramangala? Need urgent help!
+                      </p>
                       <div className="flex gap-2 mt-2">
-                        <Badge variant="secondary" className="text-xs">Recommendations</Badge>
+                        <Badge variant="secondary" className="text-xs">
+                          Recommendations
+                        </Badge>
                         <span className="text-xs text-muted-foreground">5 replies</span>
                       </div>
                     </div>
@@ -196,15 +225,19 @@ const Index = () => {
                         </Avatar>
                         <div className="text-sm font-medium">Vijay S.</div>
                       </div>
-                      <p className="text-sm">There's a water shortage expected tomorrow in HSR Layout. Stock up!</p>
+                      <p className="text-sm">
+                        There's a water shortage expected tomorrow in HSR Layout. Stock up!
+                      </p>
                       <div className="flex gap-2 mt-2">
-                        <Badge variant="secondary" className="text-xs">Alert</Badge>
+                        <Badge variant="secondary" className="text-xs">
+                          Alert
+                        </Badge>
                         <span className="text-xs text-muted-foreground">12 replies</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Events Panel */}
                 <div className="bg-muted/50 rounded-lg p-4 flex flex-col">
                   <div className="flex items-center mb-3">
@@ -251,7 +284,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Features Section */}
       <section className="py-20 bg-muted/30">
         <div className="container">
@@ -261,7 +294,7 @@ const Index = () => {
               Discover how Nearby Connect brings communities together
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="border-none shadow-sm">
               <CardHeader>
@@ -280,7 +313,7 @@ const Index = () => {
                 </Link>
               </CardContent>
             </Card>
-            
+
             <Card className="border-none shadow-sm">
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center mb-2">
@@ -288,7 +321,8 @@ const Index = () => {
                 </div>
                 <CardTitle>Community Board</CardTitle>
                 <CardDescription>
-                  Engage in discussions, share updates, and get recommendations from your neighborhood
+                  Engage in discussions, share updates, and get recommendations from your
+                  neighborhood
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -298,7 +332,7 @@ const Index = () => {
                 </Link>
               </CardContent>
             </Card>
-            
+
             <Card className="border-none shadow-sm">
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-2">
@@ -306,7 +340,8 @@ const Index = () => {
                 </div>
                 <CardTitle>Event Sharing</CardTitle>
                 <CardDescription>
-                  Discover and share local events, from community gatherings to professional networking
+                  Discover and share local events, from community gatherings to professional
+                  networking
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -316,7 +351,7 @@ const Index = () => {
                 </Link>
               </CardContent>
             </Card>
-            
+
             <Card className="border-none shadow-sm">
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
@@ -337,7 +372,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Privacy Section */}
       <section className="py-16 bg-card">
         <div className="container">
@@ -348,8 +383,9 @@ const Index = () => {
               </div>
               <h2 className="text-3xl font-bold">Your Privacy Matters</h2>
               <p className="text-muted-foreground">
-                At Nearby Connect, we prioritize your privacy and security. You have full control over your visibility 
-                and who can send you connection requests. Your location is only shared when you want it to be.
+                At Nearby Connect, we prioritize your privacy and security. You have full control
+                over your visibility and who can send you connection requests. Your location is only
+                shared when you want it to be.
               </p>
               <ul className="space-y-2">
                 <li className="flex items-center gap-2">
@@ -372,7 +408,7 @@ const Index = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div className="w-full md:w-1/2">
               <div className="bg-muted rounded-xl p-6 border">
                 <div className="space-y-4">
@@ -380,28 +416,34 @@ const Index = () => {
                     <h3 className="font-medium">Privacy Settings</h3>
                     <Badge variant="outline">Preview</Badge>
                   </div>
-                  
+
                   <div className="space-y-3">
                     <div className="flex items-center justify-between p-2 bg-background rounded border">
                       <div>
                         <p className="font-medium">Profile Visibility</p>
-                        <p className="text-sm text-muted-foreground">Control who can see your profile</p>
+                        <p className="text-sm text-muted-foreground">
+                          Control who can see your profile
+                        </p>
                       </div>
                       <Badge>Friends Only</Badge>
                     </div>
-                    
+
                     <div className="flex items-center justify-between p-2 bg-background rounded border">
                       <div>
                         <p className="font-medium">Location Sharing</p>
-                        <p className="text-sm text-muted-foreground">When to share your precise location</p>
+                        <p className="text-sm text-muted-foreground">
+                          When to share your precise location
+                        </p>
                       </div>
                       <Badge>When Using App</Badge>
                     </div>
-                    
+
                     <div className="flex items-center justify-between p-2 bg-background rounded border">
                       <div>
                         <p className="font-medium">Connection Requests</p>
-                        <p className="text-sm text-muted-foreground">Who can send you connection requests</p>
+                        <p className="text-sm text-muted-foreground">
+                          Who can send you connection requests
+                        </p>
                       </div>
                       <Badge>Everyone</Badge>
                     </div>
@@ -412,7 +454,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Testimonials */}
       <section className="py-20">
         <div className="container">
@@ -422,7 +464,7 @@ const Index = () => {
               Hear from people who have found meaningful connections through Nearby Connect
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map(testimonial => (
               <Card key={testimonial.id} className="border-none shadow-sm">
@@ -442,7 +484,7 @@ const Index = () => {
               </Card>
             ))}
           </div>
-          
+
           <div className="text-center mt-12">
             <Button asChild size="lg" className="animate-pulse-slow">
               <Link to="/discover">Join Nearby Connect Today</Link>
@@ -450,7 +492,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Footer */}
       <footer className="bg-muted py-12">
         <div className="container">
@@ -461,8 +503,10 @@ const Index = () => {
               </div>
               <span className="font-bold text-lg">Nearby Connect</span>
             </div>
-            
-            <p className="text-sm text-muted-foreground">© 2025 Nearby Connect. All rights reserved.</p>
+
+            <p className="text-sm text-muted-foreground">
+              © 2025 Nearby Connect. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>

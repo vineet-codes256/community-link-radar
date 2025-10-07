@@ -1,9 +1,13 @@
-
-import { useState, useEffect, useMemo } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/use-auth";
-import { calculateDistance, formatDistance, calculateInterestMatch, formatMatchPercentage } from "@/utils/locationUtils";
-import { NearbyUser } from "./types";
+import { useState, useEffect, useMemo } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/use-auth';
+import {
+  calculateDistance,
+  formatDistance,
+  calculateInterestMatch,
+  formatMatchPercentage,
+} from '@/utils/locationUtils';
+import { NearbyUser } from './types';
 
 type ProfileData = {
   id: string;
@@ -15,7 +19,7 @@ type ProfileData = {
 };
 
 export const useNearbyUsers = (
-  currentLocation: { latitude: number; longitude: number; } | null,
+  currentLocation: { latitude: number; longitude: number } | null,
   searchRadius: number[],
   searchTerm: string,
   sortBy: 'distance' | 'match'
@@ -39,17 +43,18 @@ export const useNearbyUsers = (
         // This will reduce client-side computation and data transfer
         // Get current user's interests - default to empty array if not available
         const { data: currentUserData } = await supabase
-          .from("profiles")
-          .select("interests, bio") // Selecting specific fields
-          .eq("id", user.id)
+          .from('profiles')
+          .select('interests, bio') // Selecting specific fields
+          .eq('id', user.id)
           .single();
 
         const userInterests = (currentUserData as unknown as ProfileData)?.interests || [];
 
         // Get all user locations and then filter by distance
         const { data: allLocations, error } = await supabase
-          .from("user_locations")
-          .select(`
+          .from('user_locations')
+          .select(
+            `
             *,
             profiles!user_locations_user_id_fkey (
               id,
@@ -59,12 +64,13 @@ export const useNearbyUsers = (
               bio,
               interests
             )
-          `)
-          .neq("user_id", user.id) // Exclude current user
-          .eq("is_visible", true);
+          `
+          )
+          .neq('user_id', user.id) // Exclude current user
+          .eq('is_visible', true);
 
         if (error) {
-          console.error("Error fetching locations:", error);
+          console.error('Error fetching locations:', error);
           setLoading(false);
           return;
         }
@@ -77,7 +83,7 @@ export const useNearbyUsers = (
 
         // Calculate distance and filter by radius
         const usersWithDistance = allLocations
-          .map((loc) => {
+          .map(loc => {
             const distance = calculateDistance(
               currentLocation.latitude,
               currentLocation.longitude,
@@ -93,19 +99,19 @@ export const useNearbyUsers = (
 
             return {
               id: profileData?.id || '',
-              name: profileData?.full_name || "Unnamed User",
-              avatar: profileData?.avatar_url || "",
+              name: profileData?.full_name || 'Unnamed User',
+              avatar: profileData?.avatar_url || '',
               distance,
               formatted_distance: formatDistance(distance),
               interests: otherInterests,
-              bio: profileData?.bio || `User near ${profileData?.username || "unknown location"}`,
+              bio: profileData?.bio || `User near ${profileData?.username || 'unknown location'}`,
               latitude: loc.latitude,
               longitude: loc.longitude,
               matchPercentage,
-              formatted_match: formatMatchPercentage(matchPercentage)
+              formatted_match: formatMatchPercentage(matchPercentage),
             };
           })
-          .filter((user) => user.distance <= searchRadius[0]);
+          .filter(user => user.distance <= searchRadius[0]);
 
         // Sort users based on selected sort criteria
         const sortedUsers = [...usersWithDistance].sort((a, b) => {
@@ -118,7 +124,7 @@ export const useNearbyUsers = (
 
         setNearbyUsers(sortedUsers);
       } catch (err) {
-        console.error("Error processing nearby users:", err);
+        console.error('Error processing nearby users:', err);
       } finally {
         setLoading(false);
       }
@@ -128,12 +134,18 @@ export const useNearbyUsers = (
   }, [currentLocation, searchRadius, user, sortBy]);
 
   // Filter users based on search term
-  const filteredUsers = useMemo(() =>
-    nearbyUsers.filter(user =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.interests.some(interest => interest.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      user.bio.toLowerCase().includes(searchTerm.toLowerCase())
-    ), [nearbyUsers, searchTerm]);
+  const filteredUsers = useMemo(
+    () =>
+      nearbyUsers.filter(
+        user =>
+          user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.interests.some(interest =>
+            interest.toLowerCase().includes(searchTerm.toLowerCase())
+          ) ||
+          user.bio.toLowerCase().includes(searchTerm.toLowerCase())
+      ),
+    [nearbyUsers, searchTerm]
+  );
 
   return { nearbyUsers: filteredUsers, loading };
 };

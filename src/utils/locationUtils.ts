@@ -1,4 +1,3 @@
-
 /**
  * Calculate the distance between two geographical coordinates using the Haversine formula
  * @param lat1 Latitude of first point in decimal degrees
@@ -7,22 +6,26 @@
  * @param lon2 Longitude of second point in decimal degrees
  * @returns Distance in kilometers
  */
-export const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+export const calculateDistance = (
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): number => {
   // Radius of the earth in km
   const R = 6371;
-  
+
   // Convert latitude and longitude from degrees to radians
   const dLat = deg2rad(lat2 - lat1);
   const dLon = deg2rad(lon2 - lon1);
-  
+
   // Haversine formula
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = R * c;
-  
+
   return distance;
 };
 
@@ -32,7 +35,7 @@ export const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2
  * @returns Angle in radians
  */
 const deg2rad = (deg: number): number => {
-  return deg * (Math.PI/180);
+  return deg * (Math.PI / 180);
 };
 
 /**
@@ -54,19 +57,22 @@ export const formatDistance = (distance: number): string => {
  * @param otherInterests Other person's interests array
  * @returns Match score as a percentage (0-100)
  */
-export const calculateInterestMatch = (userInterests: string[], otherInterests: string[]): number => {
+export const calculateInterestMatch = (
+  userInterests: string[],
+  otherInterests: string[]
+): number => {
   if (!userInterests.length || !otherInterests.length) return 0;
-  
+
   // Find common interests
-  const commonInterests = userInterests.filter(interest => 
-    otherInterests.some(otherInterest => 
-      otherInterest.toLowerCase() === interest.toLowerCase()
-    )
+  const commonInterests = userInterests.filter(interest =>
+    otherInterests.some(otherInterest => otherInterest.toLowerCase() === interest.toLowerCase())
   );
-  
+
   // Calculate percentage match
-  const matchPercentage = Math.round((commonInterests.length / Math.max(userInterests.length, otherInterests.length)) * 100);
-  
+  const matchPercentage = Math.round(
+    (commonInterests.length / Math.max(userInterests.length, otherInterests.length)) * 100
+  );
+
   return matchPercentage;
 };
 

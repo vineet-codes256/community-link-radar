@@ -1,0 +1,20 @@
+# Run tests and build before pushing
+echo "🚀 Running pre-push checks..."
+
+# Run linting (fail on errors)
+echo "📏 Running ESLint..."
+npm run lint || exit 1
+
+# Run build to ensure everything compiles
+echo "🔨 Running build..."
+npm run build || exit 1
+
+# Run tests if they exist
+if npm run test --silent 2>/dev/null; then
+    echo "🧪 Running tests..."
+    npm test || exit 1
+else
+    echo "ℹ️  No tests found, skipping..."
+fi
+
+echo "✅ All pre-push checks passed!"

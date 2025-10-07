@@ -56,4 +56,5 @@ This project is built with:
 ## Copyright
 
 All copyrights are reserved with Rawat Innovations Private Limited.
+
 # Test comment for Husky

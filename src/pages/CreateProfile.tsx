@@ -1,51 +1,52 @@
-
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { toast } from "@/components/ui/use-toast";
-import { useAuth } from "@/hooks/use-auth";
-import { MapPin } from "lucide-react";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { toast } from '@/components/ui/use-toast';
+import { useAuth } from '@/hooks/use-auth';
+import { MapPin } from 'lucide-react';
 
 const CreateProfile = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [fullName, setFullName] = useState("");
-  const [location, setLocation] = useState("");
-  const [about, setAbout] = useState("");
+  const [fullName, setFullName] = useState('');
+  const [location, setLocation] = useState('');
+  const [about, setAbout] = useState('');
   const [loading, setLoading] = useState(false);
   const [gettingLocation, setGettingLocation] = useState(false);
-  const [coordinates, setCoordinates] = useState<{latitude: number, longitude: number} | null>(null);
+  const [coordinates, setCoordinates] = useState<{ latitude: number; longitude: number } | null>(
+    null
+  );
 
   const detectLocation = () => {
     if (!navigator.geolocation) {
-      toast({ 
-        title: "Error", 
-        description: "Geolocation is not supported by your browser." 
+      toast({
+        title: 'Error',
+        description: 'Geolocation is not supported by your browser.',
       });
       return;
     }
 
     setGettingLocation(true);
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      position => {
         setCoordinates({
           latitude: position.coords.latitude,
-          longitude: position.coords.longitude
+          longitude: position.coords.longitude,
         });
-        toast({ 
-          title: "Location detected", 
-          description: "Your current location has been detected." 
+        toast({
+          title: 'Location detected',
+          description: 'Your current location has been detected.',
         });
         setGettingLocation(false);
       },
-      (error) => {
-        toast({ 
-          title: "Error", 
-          description: `Unable to get your location: ${error.message}` 
+      error => {
+        toast({
+          title: 'Error',
+          description: `Unable to get your location: ${error.message}`,
         });
         setGettingLocation(false);
       }
@@ -57,45 +58,46 @@ const CreateProfile = () => {
     setLoading(true);
 
     if (!user) {
-      toast({ title: "Error", description: "User not logged in." });
+      toast({ title: 'Error', description: 'User not logged in.' });
       setLoading(false);
       return;
     }
 
     // Save to profiles
     const { error: profileError } = await supabase
-      .from("profiles")
+      .from('profiles')
       .update({
         full_name: fullName,
         username: location, // Using username field for location name for now
-        avatar_url: "",
+        avatar_url: '',
       })
-      .eq("id", user.id);
+      .eq('id', user.id);
 
     if (profileError) {
-      toast({ title: "Error", description: profileError.message });
+      toast({ title: 'Error', description: profileError.message });
       setLoading(false);
       return;
     }
 
     // Save location coordinates if available
     if (coordinates) {
-      const { error: locationError } = await supabase
-        .from("user_locations")
-        .insert({
-          user_id: user.id,
-          latitude: coordinates.latitude,
-          longitude: coordinates.longitude,
-          is_visible: true,
-        });
+      const { error: locationError } = await supabase.from('user_locations').insert({
+        user_id: user.id,
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
+        is_visible: true,
+      });
 
       if (locationError) {
-        toast({ title: "Warning", description: "Profile saved but location coordinates could not be stored." });
+        toast({
+          title: 'Warning',
+          description: 'Profile saved but location coordinates could not be stored.',
+        });
       }
     }
 
-    toast({ title: "Profile created!", description: "Welcome to Nearby Connect." });
-    navigate("/", { replace: true });
+    toast({ title: 'Profile created!', description: 'Welcome to Nearby Connect.' });
+    navigate('/', { replace: true });
     setLoading(false);
   };
 
@@ -111,50 +113,45 @@ const CreateProfile = () => {
               type="text"
               placeholder="Full Name"
               value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              onChange={e => setFullName(e.target.value)}
               required
               disabled={loading}
             />
-            
+
             <div className="space-y-2">
               <Input
                 type="text"
                 placeholder="Location (e.g. Koramangala, Bengaluru)"
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                onChange={e => setLocation(e.target.value)}
                 required
                 disabled={loading}
               />
               <div className="flex justify-end">
-                <Button 
-                  type="button" 
-                  variant="outline" 
+                <Button
+                  type="button"
+                  variant="outline"
                   size="sm"
                   onClick={detectLocation}
                   disabled={gettingLocation || loading}
                   className="flex items-center gap-1"
                 >
                   <MapPin className="h-3 w-3" />
-                  {gettingLocation ? "Detecting..." : "Detect my location"}
+                  {gettingLocation ? 'Detecting...' : 'Detect my location'}
                 </Button>
               </div>
             </div>
-            
+
             <Textarea
               placeholder="About you (a little intro, interests, etc.)"
               value={about}
-              onChange={(e) => setAbout(e.target.value)}
+              onChange={e => setAbout(e.target.value)}
               rows={4}
               disabled={loading}
             />
-            
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={loading}
-              aria-busy={loading}
-            >
-              {loading ? "Saving..." : "Save Profile"}
+
+            <Button type="submit" className="w-full" disabled={loading} aria-busy={loading}>
+              {loading ? 'Saving...' : 'Save Profile'}
             </Button>
           </form>
         </CardContent>

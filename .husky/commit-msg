@@ -1,0 +1,15 @@
+# Check commit message format
+# Basic check: commit message should not be empty and should have at least 10 characters
+commit_msg=$(cat $1)
+
+if [ -z "$commit_msg" ]; then
+    echo "❌ Commit message cannot be empty"
+    exit 1
+fi
+
+if [ ${#commit_msg} -lt 10 ]; then
+    echo "❌ Commit message should be at least 10 characters long"
+    exit 1
+fi
+
+echo "✅ Commit message looks good"

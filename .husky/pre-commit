@@ -1,0 +1,11 @@
+# Run Prettier formatting
+npm run format
+
+# Run ESLint with auto-fix (allow warnings but fail on errors)
+npm run lint:fix || (echo "ESLint found issues that couldn't be auto-fixed. Please fix them manually." && exit 1)
+
+# Run type checking (if you have TypeScript)
+# npm run type-check
+
+# Run tests (if you have them)
+# npm test

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { toast } from "@/components/ui/use-toast";
-import CreateProfile from "./CreateProfile";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { toast } from '@/components/ui/use-toast';
+import CreateProfile from './CreateProfile';
 
-type AuthMode = "login" | "signup";
+type AuthMode = 'login' | 'signup';
 
 const Auth = () => {
-  const [authMode, setAuthMode] = useState<AuthMode>("login");
+  const [authMode, setAuthMode] = useState<AuthMode>('login');
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -23,17 +23,17 @@ const Auth = () => {
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session?.user) {
         const { data: profile } = await supabase
-          .from("profiles")
-          .select("full_name")
-          .eq("id", session.user.id)
+          .from('profiles')
+          .select('full_name')
+          .eq('id', session.user.id)
           .single();
 
         if (!profile || !profile.full_name) {
-          navigate("/create-profile", { replace: true });
+          navigate('/create-profile', { replace: true });
         } else {
-          navigate("/", { replace: true });
+          navigate('/', { replace: true });
           toast({
-            title: "Welcome!",
+            title: 'Welcome!',
             description: `Logged in as ${session.user.email}`,
           });
         }
@@ -47,7 +47,7 @@ const Auth = () => {
     setLoading(true);
     setErrorMsg(null);
 
-    if (authMode === "login") {
+    if (authMode === 'login') {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) setErrorMsg(error.message);
     } else {
@@ -62,7 +62,7 @@ const Auth = () => {
       <Card className="w-full max-w-md animate-fade-in-up shadow-md">
         <CardHeader>
           <CardTitle className="text-2xl text-center">
-            {authMode === "login" ? "Login to Nearby Connect" : "Create your account"}
+            {authMode === 'login' ? 'Login to Nearby Connect' : 'Create your account'}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -73,7 +73,7 @@ const Auth = () => {
               placeholder="Email address"
               autoComplete="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
               disabled={loading}
             />
@@ -81,41 +81,32 @@ const Auth = () => {
               type="password"
               id="password"
               placeholder="Password"
-              autoComplete={
-                authMode === "signup" ? "new-password" : "current-password"
-              }
+              autoComplete={authMode === 'signup' ? 'new-password' : 'current-password'}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               required
               minLength={6}
               disabled={loading}
             />
-            {errorMsg && (
-              <div className="text-red-500 text-sm">{errorMsg}</div>
-            )}
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={loading}
-              aria-busy={loading}
-            >
+            {errorMsg && <div className="text-red-500 text-sm">{errorMsg}</div>}
+            <Button type="submit" className="w-full" disabled={loading} aria-busy={loading}>
               {loading
-                ? authMode === "login"
-                  ? "Logging in..."
-                  : "Signing up..."
-                : authMode === "login"
-                ? "Log In"
-                : "Sign Up"}
+                ? authMode === 'login'
+                  ? 'Logging in...'
+                  : 'Signing up...'
+                : authMode === 'login'
+                  ? 'Log In'
+                  : 'Sign Up'}
             </Button>
           </form>
           <div className="mt-6 flex justify-center">
-            {authMode === "login" ? (
+            {authMode === 'login' ? (
               <span className="text-sm">
-                Don&apos;t have an account?{" "}
+                Don&apos;t have an account?{' '}
                 <button
                   className="font-semibold text-primary hover:underline"
                   type="button"
-                  onClick={() => setAuthMode("signup")}
+                  onClick={() => setAuthMode('signup')}
                   disabled={loading}
                 >
                   Sign Up
@@ -123,11 +114,11 @@ const Auth = () => {
               </span>
             ) : (
               <span className="text-sm">
-                Already have an account?{" "}
+                Already have an account?{' '}
                 <button
                   className="font-semibold text-primary hover:underline"
                   type="button"
-                  onClick={() => setAuthMode("login")}
+                  onClick={() => setAuthMode('login')}
                   disabled={loading}
                 >
                   Log In

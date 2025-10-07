@@ -1,70 +1,125 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nearby Connect - Find People Nearby | Location-Based Social Networking</title>
+    <meta
+      name="description"
+      content="Discover and connect with people nearby who share your interests. Join Nearby Connect - the location-based social networking app for meaningful connections in your area. Find friends, communities, and like-minded people near you."
+    />
+    <meta
+      name="keywords"
+      content="nearby connect, find people nearby, location based social network, local community, meet people near me, social networking app, connect with locals, nearby friends, community discovery, location-based networking, local connections, nearby social, meetup app, local networking"
+    />
+    <meta name="author" content="Rawat Innovations Pvt. Ltd." />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+    <meta name="language" content="English" />
+    <meta name="geo.region" content="IN" />
+    <meta name="geo.placename" content="India" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nearby Connect - Find Your People Nearby</title>
-  <meta name="description"
-    content="Discover and connect with people nearby who share your interests. Nearby Connect helps you find meaningful connections in your area." />
-  <meta name="keywords" content="community, connect, nearby, interests, social, networking, location-based" />
-  <meta name="author" content="Rawat Innovations Pvt. Ltd." />
-  <meta name="robots" content="index, follow" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.karmicinnovations.com/" />
+    <meta property="og:title" content="Nearby Connect - Find Your People Nearby" />
+    <meta
+      property="og:description"
+      content="Discover and connect with people nearby who share your interests. Nearby Connect helps you find meaningful connections in your area."
+    />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:site_name" content="Nearby Connect" />
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.karmicinnovations.com/" />
-  <meta property="og:title" content="Nearby Connect - Find Your People Nearby" />
-  <meta property="og:description"
-    content="Discover and connect with people nearby who share your interests. Nearby Connect helps you find meaningful connections in your area." />
-  <meta property="og:image" content="/og-image.svg" />
-  <meta property="og:site_name" content="Nearby Connect" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://www.karmicinnovations.com/" />
+    <meta name="twitter:title" content="Nearby Connect - Find Your People Nearby" />
+    <meta
+      name="twitter:description"
+      content="Discover and connect with people nearby who share your interests. Nearby Connect helps you find meaningful connections in your area."
+    />
+    <meta name="twitter:image" content="/twitter-image.svg" />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://www.karmicinnovations.com/" />
-  <meta name="twitter:title" content="Nearby Connect - Find Your People Nearby" />
-  <meta name="twitter:description"
-    content="Discover and connect with people nearby who share your interests. Nearby Connect helps you find meaningful connections in your area." />
-  <meta name="twitter:image" content="/twitter-image.svg" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-  <link rel="manifest" href="/site.webmanifest" />
+    <!-- Compression and performance -->
+    <meta http-equiv="Content-Encoding" content="gzip" />
+    <link rel="preload" href="/src/main.tsx" as="script" crossorigin />
+    <link rel="preload" href="/src/index.css" as="style" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Theme color -->
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="msapplication-TileColor" content="#ffffff" />
+    <!-- Theme color -->
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Nearby Connect",
-      "description": "Discover and connect with people nearby who share your interests. Nearby Connect helps you find meaningful connections in your area.",
-      "url": "https://www.karmicinnovations.com/",
-      "applicationCategory": "SocialNetworkingApplication",
-      "operatingSystem": "Web",
-      "author": {
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Nearby Connect",
+        "description": "Discover and connect with people nearby who share your interests. Join Nearby Connect - the location-based social networking app for meaningful connections in your area.",
+        "url": "https://www.karmicinnovations.com/",
+        "applicationCategory": "SocialNetworkingApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Rawat Innovations Pvt. Ltd.",
+          "foundingDate": "2025-05",
+          "url": "https://www.karmicinnovations.com/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Rawat Innovations Pvt. Ltd."
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.karmicinnovations.com/discover?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        },
+        "sameAs": ["https://www.karmicinnovations.com/"],
+        "featureList": [
+          "Location-based matching",
+          "Interest-based connections",
+          "Community discovery",
+          "Real-time messaging",
+          "Profile customization"
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Rawat Innovations Pvt. Ltd.",
-        "foundingDate": "2025-05"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Rawat Innovations Pvt. Ltd."
+        "url": "https://www.karmicinnovations.com/",
+        "logo": "https://www.karmicinnovations.com/logo.svg",
+        "foundingDate": "2025-05",
+        "description": "Rawat Innovations Pvt. Ltd. develops innovative social networking solutions including Nearby Connect, a location-based platform for meaningful connections.",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "url": "https://www.karmicinnovations.com/"
+        }
       }
-    }
     </script>
-</head>
+  </head>
 
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
-
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

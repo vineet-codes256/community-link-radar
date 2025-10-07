@@ -1,61 +1,65 @@
-import { MessageSquare, Heart, Share, User, Search } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+import { MessageSquare, Heart, Share, User, Search } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
 
 // Mock data for community posts
 const communityPosts = [
   {
     id: 1,
     user: {
-      name: "Deepa Verma",
-      avatar: "",
+      name: 'Deepa Verma',
+      avatar: '',
     },
-    time: "2 hours ago",
-    content: "Does anyone know a good interior designer in Indiranagar? Looking to renovate my apartment.",
+    time: '2 hours ago',
+    content:
+      'Does anyone know a good interior designer in Indiranagar? Looking to renovate my apartment.',
     likes: 12,
     comments: 8,
-    category: "recommendations"
+    category: 'recommendations',
   },
   {
     id: 2,
     user: {
-      name: "Rohan Joshi",
-      avatar: "",
+      name: 'Rohan Joshi',
+      avatar: '',
     },
-    time: "5 hours ago",
-    content: "Heads up everyone! There's a water shortage expected in HSR Layout tomorrow from 10AM to 5PM. Plan accordingly!",
+    time: '5 hours ago',
+    content:
+      "Heads up everyone! There's a water shortage expected in HSR Layout tomorrow from 10AM to 5PM. Plan accordingly!",
     likes: 32,
     comments: 14,
-    category: "alerts"
+    category: 'alerts',
   },
   {
     id: 3,
     user: {
-      name: "Kavita Nair",
-      avatar: "",
+      name: 'Kavita Nair',
+      avatar: '',
     },
-    time: "Yesterday",
-    content: "Our community garden project in Koramangala is looking for volunteers this weekend. If you have a green thumb or just want to help, please reach out!",
+    time: 'Yesterday',
+    content:
+      'Our community garden project in Koramangala is looking for volunteers this weekend. If you have a green thumb or just want to help, please reach out!',
     likes: 24,
     comments: 6,
-    category: "events"
+    category: 'events',
   },
   {
     id: 4,
     user: {
-      name: "Amit Patel",
-      avatar: "",
+      name: 'Amit Patel',
+      avatar: '',
     },
-    time: "2 days ago",
-    content: "I'm new to Bengaluru and looking to connect with people who enjoy cycling on weekends. Any cycling groups around Whitefield?",
+    time: '2 days ago',
+    content:
+      "I'm new to Bengaluru and looking to connect with people who enjoy cycling on weekends. Any cycling groups around Whitefield?",
     likes: 18,
     comments: 22,
-    category: "discussions"
-  }
+    category: 'discussions',
+  },
 ];
 
 const Community = () => {
@@ -64,7 +68,9 @@ const Community = () => {
       <div className="flex flex-col gap-6">
         <div className="space-y-4">
           <h1 className="text-3xl font-bold">Community Board</h1>
-          <p className="text-muted-foreground">Engage with your local community, share updates and ask for recommendations</p>
+          <p className="text-muted-foreground">
+            Engage with your local community, share updates and ask for recommendations
+          </p>
         </div>
 
         <div className="flex gap-4">
@@ -73,9 +79,14 @@ const Community = () => {
               <CardHeader className="pb-4">
                 <div className="flex gap-2">
                   <Avatar className="h-10 w-10">
-                    <AvatarFallback><User className="h-4 w-4" /></AvatarFallback>
+                    <AvatarFallback>
+                      <User className="h-4 w-4" />
+                    </AvatarFallback>
                   </Avatar>
-                  <Input placeholder="Share something with your community..." className="bg-muted" />
+                  <Input
+                    placeholder="Share something with your community..."
+                    className="bg-muted"
+                  />
                 </div>
               </CardHeader>
               <CardFooter className="pt-0 border-t flex justify-between">
@@ -137,10 +148,10 @@ const Community = () => {
                   </Card>
                 ))}
               </TabsContent>
-              
+
               <TabsContent value="recommendations" className="space-y-4 mt-0">
                 {communityPosts
-                  .filter(post => post.category === "recommendations")
+                  .filter(post => post.category === 'recommendations')
                   .map(post => (
                     /* Same card structure as above */
                     <Card key={post.id} className="shadow-sm">
@@ -181,11 +192,11 @@ const Community = () => {
                     </Card>
                   ))}
               </TabsContent>
-              
+
               {/* Other tab contents are similar but with filtered posts */}
               <TabsContent value="alerts" className="space-y-4 mt-0">
                 {communityPosts
-                  .filter(post => post.category === "alerts")
+                  .filter(post => post.category === 'alerts')
                   .map(post => (
                     <Card key={post.id} className="shadow-sm">
                       <CardHeader className="pb-2">
@@ -226,7 +237,7 @@ const Community = () => {
               </TabsContent>
               <TabsContent value="events" className="space-y-4 mt-0">
                 {communityPosts
-                  .filter(post => post.category === "events")
+                  .filter(post => post.category === 'events')
                   .map(post => (
                     <Card key={post.id} className="shadow-sm">
                       <CardHeader className="pb-2">
@@ -267,7 +278,7 @@ const Community = () => {
               </TabsContent>
               <TabsContent value="discussions" className="space-y-4 mt-0">
                 {communityPosts
-                  .filter(post => post.category === "discussions")
+                  .filter(post => post.category === 'discussions')
                   .map(post => (
                     <Card key={post.id} className="shadow-sm">
                       <CardHeader className="pb-2">
@@ -343,11 +354,13 @@ const Community = () => {
                   <p className="text-sm">Koramangala, Bengaluru</p>
                   <p className="text-xs text-muted-foreground">3,240 neighbors</p>
                   <div className="flex -space-x-2 mt-2">
-                    {Array(5).fill(0).map((_, i) => (
-                      <Avatar key={i} className="h-8 w-8 border-2 border-background">
-                        <AvatarFallback className="text-xs">U{i+1}</AvatarFallback>
-                      </Avatar>
-                    ))}
+                    {Array(5)
+                      .fill(0)
+                      .map((_, i) => (
+                        <Avatar key={i} className="h-8 w-8 border-2 border-background">
+                          <AvatarFallback className="text-xs">U{i + 1}</AvatarFallback>
+                        </Avatar>
+                      ))}
                     <div className="flex items-center justify-center h-8 w-8 rounded-full bg-muted text-xs">
                       +3.2k
                     </div>

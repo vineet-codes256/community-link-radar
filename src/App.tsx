@@ -1,22 +1,22 @@
 // Copyright © 2025 Rawat Innovations Private Limited. All rights reserved.
 
 import { Suspense, lazy } from 'react';
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "@/components/theme-provider";
-import MainLayout from "./layouts/MainLayout";
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as Sonner } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from '@/components/theme-provider';
+import MainLayout from './layouts/MainLayout';
 
 // Lazy load pages for better performance
-const Index = lazy(() => import("./pages/Index"));
-const Discover = lazy(() => import("./pages/discover"));
-const Community = lazy(() => import("./pages/Community"));
-const Events = lazy(() => import("./pages/Events"));
-const Profile = lazy(() => import("./pages/Profile"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const CreateProfile = lazy(() => import("./pages/CreateProfile"));
+const Index = lazy(() => import('./pages/Index'));
+const Discover = lazy(() => import('./pages/discover'));
+const Community = lazy(() => import('./pages/Community'));
+const Events = lazy(() => import('./pages/Events'));
+const Profile = lazy(() => import('./pages/Profile'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const CreateProfile = lazy(() => import('./pages/CreateProfile'));
 
 // Loading component
 const PageLoader = () => (

@@ -1,4 +1,3 @@
-
 export type NearbyUser = {
   id: string;
   name: string;
