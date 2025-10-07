@@ -1,9 +1,18 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { calculateDistance, formatDistance, calculateInterestMatch, formatMatchPercentage } from "@/utils/locationUtils";
 import { NearbyUser } from "./types";
+
+type ProfileData = {
+  id: string;
+  full_name: string | null;
+  username: string | null;
+  avatar_url: string | null;
+  bio?: string;
+  interests?: string[];
+};
 
 export const useNearbyUsers = (
   currentLocation: { latitude: number; longitude: number; } | null,
@@ -25,14 +34,17 @@ export const useNearbyUsers = (
 
       setLoading(true);
       try {
+        // TODO: Optimize by moving distance filtering to server-side using PostGIS RPC function
+        // Create a Supabase RPC function 'get_nearby_users' for better performance
+        // This will reduce client-side computation and data transfer
         // Get current user's interests - default to empty array if not available
         const { data: currentUserData } = await supabase
           .from("profiles")
-          .select("*") // Selecting all fields since we're not sure which exist
+          .select("interests, bio") // Selecting specific fields
           .eq("id", user.id)
           .single();
-          
-        const userInterests = currentUserData?.interests as string[] || [];
+
+        const userInterests = (currentUserData as unknown as ProfileData)?.interests || [];
 
         // Get all user locations and then filter by distance
         const { data: allLocations, error } = await supabase
@@ -44,7 +56,8 @@ export const useNearbyUsers = (
               full_name,
               username,
               avatar_url,
-              bio
+              bio,
+              interests
             )
           `)
           .neq("user_id", user.id) // Exclude current user
@@ -71,13 +84,13 @@ export const useNearbyUsers = (
               loc.latitude,
               loc.longitude
             );
-            
+
             // Calculate interest match percentage
-            const profileData = loc.profiles;
+            const profileData = loc.profiles as unknown as ProfileData;
             // Default to empty array if interests don't exist
-            const otherInterests = (profileData?.interests as string[]) || [];
+            const otherInterests = profileData?.interests || [];
             const matchPercentage = calculateInterestMatch(userInterests, otherInterests);
-            
+
             return {
               id: profileData?.id || '',
               name: profileData?.full_name || "Unnamed User",
@@ -115,11 +128,12 @@ export const useNearbyUsers = (
   }, [currentLocation, searchRadius, user, sortBy]);
 
   // Filter users based on search term
-  const filteredUsers = nearbyUsers.filter(user => 
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.interests.some(interest => interest.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    user.bio.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredUsers = useMemo(() =>
+    nearbyUsers.filter(user =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.interests.some(interest => interest.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      user.bio.toLowerCase().includes(searchTerm.toLowerCase())
+    ), [nearbyUsers, searchTerm]);
 
   return { nearbyUsers: filteredUsers, loading };
 };

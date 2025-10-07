@@ -1,4 +1,5 @@
 
+import React from "react";
 import { Users, MapPin } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,7 @@ interface UserCardProps {
   user: NearbyUser;
 }
 
-export const UserCard = ({ user }: UserCardProps) => {
+export const UserCard = React.memo(({ user }: UserCardProps) => {
   // Handle connect button click
   const handleConnect = (userId: string, userName: string) => {
     toast({
@@ -34,7 +35,7 @@ export const UserCard = ({ user }: UserCardProps) => {
             <MapPin className="h-3 w-3 mr-1" /> {user.formatted_distance}
           </CardDescription>
         </div>
-        <Badge 
+        <Badge
           className={`ml-auto ${user.matchPercentage > 50 ? 'bg-green-500 hover:bg-green-600' : ''}`}
         >
           {user.formatted_match}
@@ -49,8 +50,8 @@ export const UserCard = ({ user }: UserCardProps) => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button 
-          className="w-full" 
+        <Button
+          className="w-full"
           onClick={() => handleConnect(user.id, user.name)}
         >
           <Users className="h-4 w-4 mr-2" />
@@ -59,4 +60,4 @@ export const UserCard = ({ user }: UserCardProps) => {
       </CardFooter>
     </Card>
   );
-};
+});

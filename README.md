@@ -2,7 +2,7 @@
 
 ## Project info
 
-This is the **Nearby Connect** project.
+This is the **Nearby Connect** project, a moonshot initiative by Rawat Innovations Pvt. Ltd., an emerging startup founded in May 2025.
 
 ## How can I edit this code?
 
