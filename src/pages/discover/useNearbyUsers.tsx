@@ -18,6 +18,227 @@ type ProfileData = {
   interests?: string[];
 };
 
+// Mock users data for development and testing
+const mockUsers = [
+  {
+    name: 'Vineet Rawat',
+    username: 'vineet_rawat',
+    bio: 'Software developer passionate about React and TypeScript',
+    interests: ['Technology', 'Coding', 'React'],
+  },
+  {
+    name: 'Suneet Rawat',
+    username: 'suneet_rawat',
+    bio: 'Full-stack developer with a love for open source',
+    interests: ['JavaScript', 'Node.js', 'Open Source'],
+  },
+  {
+    name: 'Yash Bisht',
+    username: 'yash_bisht',
+    bio: 'UI/UX designer creating beautiful user experiences',
+    interests: ['Design', 'UI/UX', 'Figma'],
+  },
+  {
+    name: 'Akhil Panwar',
+    username: 'akhil_panwar',
+    bio: 'DevOps engineer automating the cloud',
+    interests: ['DevOps', 'AWS', 'Docker'],
+  },
+  {
+    name: 'Ali Sayed',
+    username: 'ali_sayed',
+    bio: 'Mobile app developer specializing in React Native',
+    interests: ['Mobile', 'React Native', 'iOS'],
+  },
+  {
+    name: 'Junaid Ansari',
+    username: 'junaid_ansari',
+    bio: 'Backend developer with expertise in Python and Django',
+    interests: ['Python', 'Django', 'Backend'],
+  },
+  {
+    name: 'Adil Shaikh',
+    username: 'adil_shaikh',
+    bio: 'Data scientist analyzing trends and patterns',
+    interests: ['Data Science', 'Python', 'Machine Learning'],
+  },
+  {
+    name: 'Harsh Sharma',
+    username: 'harsh_sharma',
+    bio: 'Frontend developer crafting responsive web applications',
+    interests: ['Frontend', 'CSS', 'JavaScript'],
+  },
+  {
+    name: 'Sooraj B.',
+    username: 'sooraj_b',
+    bio: 'Product manager bridging technology and business',
+    interests: ['Product Management', 'Agile', 'Strategy'],
+  },
+  {
+    name: 'Manish Kumar',
+    username: 'manish_kumar',
+    bio: 'Database administrator ensuring data integrity',
+    interests: ['Databases', 'SQL', 'PostgreSQL'],
+  },
+  {
+    name: 'Jagdamba Prasad',
+    username: 'jagdamba_prasad',
+    bio: 'System architect designing scalable solutions',
+    interests: ['Architecture', 'System Design', 'Scalability'],
+  },
+  {
+    name: 'Rajiv Kumar',
+    username: 'rajiv_kumar',
+    bio: 'Quality assurance engineer ensuring product excellence',
+    interests: ['QA', 'Testing', 'Automation'],
+  },
+  {
+    name: 'Anil K',
+    username: 'anil_k',
+    bio: 'Security specialist protecting digital assets',
+    interests: ['Cybersecurity', 'Security', 'Ethical Hacking'],
+  },
+  {
+    name: 'Raghav K',
+    username: 'raghav_k',
+    bio: 'Cloud engineer managing infrastructure',
+    interests: ['Cloud', 'AWS', 'Infrastructure'],
+  },
+  {
+    name: 'Madhav K',
+    username: 'madhav_k',
+    bio: 'AI/ML engineer building intelligent systems',
+    interests: ['AI', 'Machine Learning', 'TensorFlow'],
+  },
+  {
+    name: 'Rohit G',
+    username: 'rohit_g',
+    bio: 'Blockchain developer creating decentralized solutions',
+    interests: ['Blockchain', 'Ethereum', 'Smart Contracts'],
+  },
+  {
+    name: 'Mohit Singh',
+    username: 'mohit_singh',
+    bio: 'Game developer bringing virtual worlds to life',
+    interests: ['Game Development', 'Unity', 'C#'],
+  },
+  {
+    name: 'Amin Memon',
+    username: 'amin_memon',
+    bio: 'Network engineer connecting the digital world',
+    interests: ['Networking', 'Cisco', 'Infrastructure'],
+  },
+  // Additional randomized combinations
+  {
+    name: 'Vineet Sharma',
+    username: 'vineet_sharma',
+    bio: 'Creative developer blending art and technology',
+    interests: ['Creative Coding', 'WebGL', 'Three.js'],
+  },
+  {
+    name: 'Suneet Kumar',
+    username: 'suneet_kumar',
+    bio: 'Mobile developer creating cross-platform apps',
+    interests: ['Flutter', 'Dart', 'Cross-platform'],
+  },
+  {
+    name: 'Yash Rawat',
+    username: 'yash_rawat',
+    bio: 'Data engineer building data pipelines',
+    interests: ['Data Engineering', 'ETL', 'Apache Spark'],
+  },
+  {
+    name: 'Akhil Singh',
+    username: 'akhil_singh',
+    bio: 'DevOps specialist automating deployments',
+    interests: ['CI/CD', 'Jenkins', 'Kubernetes'],
+  },
+  {
+    name: 'Ali Ansari',
+    username: 'ali_ansari',
+    bio: 'Full-stack developer with MERN expertise',
+    interests: ['MERN', 'MongoDB', 'Express.js'],
+  },
+  {
+    name: 'Junaid Shaikh',
+    username: 'junaid_shaikh',
+    bio: 'Frontend architect leading development teams',
+    interests: ['Leadership', 'React', 'Team Management'],
+  },
+  {
+    name: 'Adil Panwar',
+    username: 'adil_panwar',
+    bio: 'Backend specialist in microservices',
+    interests: ['Microservices', 'Spring Boot', 'Java'],
+  },
+  {
+    name: 'Harsh Bisht',
+    username: 'harsh_bisht',
+    bio: 'UX researcher understanding user behavior',
+    interests: ['UX Research', 'User Testing', 'Psychology'],
+  },
+  {
+    name: 'Sooraj Kumar',
+    username: 'sooraj_kumar',
+    bio: 'Technical writer documenting complex systems',
+    interests: ['Technical Writing', 'Documentation', 'API Design'],
+  },
+  {
+    name: 'Manish Rawat',
+    username: 'manish_rawat',
+    bio: 'Performance engineer optimizing applications',
+    interests: ['Performance', 'Optimization', 'Monitoring'],
+  },
+  {
+    name: 'Jagdamba Singh',
+    username: 'jagdamba_singh',
+    bio: 'Scrum master facilitating agile teams',
+    interests: ['Agile', 'Scrum', 'Team Facilitation'],
+  },
+  {
+    name: 'Rajiv Sharma',
+    username: 'rajiv_sharma',
+    bio: 'Solutions architect designing enterprise systems',
+    interests: ['Enterprise Architecture', 'SOA', 'Integration'],
+  },
+  {
+    name: 'Anil Prasad',
+    username: 'anil_prasad',
+    bio: 'Penetration tester securing applications',
+    interests: ['Penetration Testing', 'Security', 'Vulnerability Assessment'],
+  },
+  {
+    name: 'Raghav Singh',
+    username: 'raghav_singh',
+    bio: 'Site reliability engineer ensuring uptime',
+    interests: ['SRE', 'Reliability', 'Monitoring'],
+  },
+  {
+    name: 'Madhav Kumar',
+    username: 'madhav_kumar',
+    bio: 'NLP engineer processing human language',
+    interests: ['NLP', 'Python', 'Transformers'],
+  },
+  {
+    name: 'Rohit Ansari',
+    username: 'rohit_ansari',
+    bio: 'IoT developer connecting physical devices',
+    interests: ['IoT', 'Embedded Systems', 'Arduino'],
+  },
+  {
+    name: 'Mohit Rawat',
+    username: 'mohit_rawat',
+    bio: 'AR/VR developer creating immersive experiences',
+    interests: ['AR/VR', 'Unity', 'Oculus'],
+  },
+  {
+    name: 'Amin Sayed',
+    username: 'amin_sayed',
+    bio: 'API developer building robust interfaces',
+    interests: ['API Development', 'REST', 'GraphQL'],
+  },
+];
+
 export const useNearbyUsers = (
   currentLocation: { latitude: number; longitude: number } | null,
   searchRadius: number[],
@@ -76,7 +297,49 @@ export const useNearbyUsers = (
         }
 
         if (!allLocations || allLocations.length === 0) {
-          setNearbyUsers([]);
+          // Use mock users for development when no real users are found
+          const mockNearbyUsers: NearbyUser[] = mockUsers.map((mockUser, index) => {
+            // Generate random locations near the current location for mock users
+            const randomLat = (currentLocation?.latitude || 12.9716) + (Math.random() - 0.5) * 0.1;
+            const randomLng = (currentLocation?.longitude || 77.5946) + (Math.random() - 0.5) * 0.1;
+            const distance = calculateDistance(
+              currentLocation?.latitude || 12.9716,
+              currentLocation?.longitude || 77.5946,
+              randomLat,
+              randomLng
+            );
+
+            // Calculate interest match with current user's interests
+            const matchPercentage = calculateInterestMatch(userInterests, mockUser.interests);
+
+            return {
+              id: `mock-${index + 1}`,
+              name: mockUser.name,
+              avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${mockUser.username}`,
+              distance,
+              formatted_distance: formatDistance(distance),
+              interests: mockUser.interests,
+              bio: mockUser.bio,
+              latitude: randomLat,
+              longitude: randomLng,
+              matchPercentage,
+              formatted_match: formatMatchPercentage(matchPercentage),
+            };
+          });
+
+          // Filter by search radius and sort
+          const filteredMockUsers = mockNearbyUsers.filter(
+            user => user.distance <= searchRadius[0]
+          );
+          const sortedMockUsers = [...filteredMockUsers].sort((a, b) => {
+            if (sortBy === 'distance') {
+              return a.distance - b.distance;
+            } else {
+              return b.matchPercentage - a.matchPercentage;
+            }
+          });
+
+          setNearbyUsers(sortedMockUsers);
           setLoading(false);
           return;
         }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Compass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocationData } from './useLocationData';
@@ -25,25 +25,54 @@ const Discover = () => {
     sortBy
   );
 
-  // Breadcrumb structured data
-  const breadcrumbScript = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://www.karmicinnovations.com/',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Discover',
-        item: 'https://www.karmicinnovations.com/discover',
-      },
-    ],
-  };
+  // Memoize breadcrumb structured data
+  const breadcrumbScript = useMemo(
+    () => ({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://www.karmicinnovations.com/',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Discover',
+          item: 'https://www.karmicinnovations.com/discover',
+        },
+      ],
+    }),
+    []
+  );
+
+  // Memoize handlers to prevent unnecessary re-renders
+  const handleSearchRadiusChange = useCallback((value: number[]) => {
+    setSearchRadius(value);
+  }, []);
+
+  const handleSearchTermChange = useCallback((value: string) => {
+    setSearchTerm(value);
+  }, []);
+
+  const handleSortChange = useCallback((value: 'distance' | 'match') => {
+    setSortBy(value);
+  }, []);
+
+  // Memoize filtered and sorted users
+  const displayedUsers = useMemo(() => {
+    if (!nearbyUsers) return [];
+
+    return nearbyUsers.slice().sort((a, b) => {
+      if (sortBy === 'distance') {
+        return a.distance - b.distance;
+      } else {
+        return b.matchPercentage - a.matchPercentage;
+      }
+    });
+  }, [nearbyUsers, sortBy]);
 
   return (
     <div className="container px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 animate-fade-in">
@@ -73,25 +102,25 @@ const Discover = () => {
           <LocationHeader
             locationName={locationName}
             searchRadius={searchRadius}
-            setSearchRadius={setSearchRadius}
+            setSearchRadius={handleSearchRadiusChange}
             onRefreshLocation={handleRefreshLocation}
           />
 
           <SearchAndFilterBar
             searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
+            setSearchTerm={handleSearchTermChange}
             sortBy={sortBy}
-            setSortBy={setSortBy}
+            setSortBy={handleSortChange}
           />
         </div>
 
         {loading ? (
           <LoadingState />
-        ) : nearbyUsers.length === 0 ? (
+        ) : displayedUsers.length === 0 ? (
           <EmptyState onRefreshLocation={handleRefreshLocation} />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-            {nearbyUsers.map(user => (
+            {displayedUsers.map(user => (
               <UserCard key={user.id} user={user} />
             ))}
           </div>

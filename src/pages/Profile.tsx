@@ -6,8 +6,38 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import { useMemo, useCallback, memo } from 'react';
 
-const Profile = () => {
+const Profile = memo(() => {
+  const mockConnections = useMemo(
+    () => [
+      { id: 1, name: 'Vineet Rawat', location: 'Bangalore', connectedDays: 2 },
+      { id: 2, name: 'Suneet Rawat', location: 'Delhi', connectedDays: 5 },
+      { id: 3, name: 'Yash Bisht', location: 'Mumbai', connectedDays: 1 },
+      { id: 4, name: 'Akhil Panwar', location: 'Pune', connectedDays: 3 },
+      { id: 5, name: 'Ali Sayed', location: 'Hyderabad', connectedDays: 7 },
+      { id: 6, name: 'Junaid Ansari', location: 'Chennai', connectedDays: 4 },
+      { id: 7, name: 'Adil Shaikh', location: 'Ahmedabad', connectedDays: 6 },
+      { id: 8, name: 'Harsh Sharma', location: 'Jaipur', connectedDays: 2 },
+    ],
+    []
+  );
+
+  const handleEditProfile = useCallback(() => {
+    // Handle edit profile functionality
+  }, []);
+
+  const handleSettings = useCallback(() => {
+    // Handle settings functionality
+  }, []);
+
+  const handleCreatePost = useCallback(() => {
+    // Handle create post functionality
+  }, []);
+
+  const handleViewConnection = useCallback((userId: number) => {
+    // Handle view connection functionality
+  }, []);
   return (
     <div className="container py-8 animate-fade-in">
       <div className="flex flex-col gap-6">
@@ -37,11 +67,11 @@ const Profile = () => {
               </div>
 
               <div className="flex flex-wrap gap-2 md:flex-nowrap">
-                <Button variant="outline">
+                <Button variant="outline" onClick={handleSettings}>
                   <Settings className="h-4 w-4 mr-2" />
                   Settings
                 </Button>
-                <Button>Edit Profile</Button>
+                <Button onClick={handleEditProfile}>Edit Profile</Button>
               </div>
             </div>
           </div>
@@ -121,26 +151,29 @@ const Profile = () => {
                   <CardContent>
                     <ScrollArea className="h-[400px] pr-4">
                       <div className="space-y-4">
-                        {Array(8)
-                          .fill(0)
-                          .map((_, i) => (
-                            <div key={i} className="flex items-center justify-between">
-                              <div className="flex items-center gap-3">
-                                <Avatar>
-                                  <AvatarFallback>U{i + 1}</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                  <p className="font-medium">User {i + 1}</p>
-                                  <p className="text-sm text-muted-foreground">
-                                    Koramangala • Connected 2 days ago
-                                  </p>
-                                </div>
+                        {mockConnections.map(connection => (
+                          <div key={connection.id} className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <Avatar>
+                                <AvatarFallback>U{connection.id}</AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <p className="font-medium">{connection.name}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  {connection.location} • Connected {connection.connectedDays} days
+                                  ago
+                                </p>
                               </div>
-                              <Button variant="ghost" size="sm">
-                                View
-                              </Button>
                             </div>
-                          ))}
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleViewConnection(connection.id)}
+                            >
+                              View
+                            </Button>
+                          </div>
+                        ))}
                       </div>
                     </ScrollArea>
                   </CardContent>
@@ -156,7 +189,7 @@ const Profile = () => {
                   <CardContent>
                     <div className="py-8 text-center">
                       <p className="text-muted-foreground mb-4">You haven't posted anything yet</p>
-                      <Button>Create Your First Post</Button>
+                      <Button onClick={handleCreatePost}>Create Your First Post</Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -231,6 +264,6 @@ const Profile = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Profile;

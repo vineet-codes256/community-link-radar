@@ -1,11 +1,12 @@
 import { UserRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { memo } from 'react';
 
 interface EmptyStateProps {
   onRefreshLocation: () => void;
 }
 
-export const EmptyState = ({ onRefreshLocation }: EmptyStateProps) => {
+export const EmptyState = memo(({ onRefreshLocation }: EmptyStateProps) => {
   return (
     <div className="text-center py-12">
       <UserRound className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
@@ -16,4 +17,4 @@ export const EmptyState = ({ onRefreshLocation }: EmptyStateProps) => {
       </Button>
     </div>
   );
-};
+});

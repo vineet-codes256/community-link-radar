@@ -23,27 +23,43 @@ import { useNavigate } from 'react-router-dom';
 const testimonials = [
   {
     id: 1,
-    name: 'Rahul Sharma',
-    avatar: '',
-    location: 'Mumbai',
+    name: 'Vineet Rawat',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=vineet_rawat',
+    location: 'Bengaluru',
     quote:
       'I moved to a new city and Nearby Connect helped me find like-minded people in my neighborhood. Made some great friends!',
   },
   {
     id: 2,
-    name: 'Priya Patel',
-    avatar: '',
-    location: 'Bengaluru',
+    name: 'Suneet Rawat',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=suneet_rawat',
+    location: 'Delhi',
     quote:
-      "As a small business owner, I can connect with my local community and share promotions. It's been great for business!",
+      "As a developer, I can connect with other tech professionals and share knowledge. It's been amazing for my career growth!",
   },
   {
     id: 3,
-    name: 'Vikram Singh',
-    avatar: '',
-    location: 'Delhi',
+    name: 'Yash Bisht',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=yash_bisht',
+    location: 'Mumbai',
     quote:
-      'I discovered a cycling group just 2km from my house! Now we meet every weekend for rides. Amazing platform!',
+      'I discovered amazing local events and communities just around the corner! Now I never miss out on neighborhood happenings.',
+  },
+  {
+    id: 4,
+    name: 'Akhil Panwar',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=akhil_panwar',
+    location: 'Pune',
+    quote:
+      'The platform helped me find collaborators for my startup. Connected with amazing talent in my city!',
+  },
+  {
+    id: 5,
+    name: 'Ali Sayed',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ali_sayed',
+    location: 'Hyderabad',
+    quote:
+      'Found my fitness community and workout partners through Nearby Connect. Staying healthy has never been easier!',
   },
 ];
 
@@ -155,38 +171,41 @@ const Index = () => {
                   <div className="space-y-3 flex-1">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8">
-                        <AvatarFallback>P</AvatarFallback>
+                        <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=junaid_ansari" />
+                        <AvatarFallback>JA</AvatarFallback>
                       </Avatar>
                       <div className="text-sm">
-                        <div className="font-medium">Priya S.</div>
+                        <div className="font-medium">Junaid Ansari</div>
                         <div className="text-xs text-muted-foreground">500m away</div>
                       </div>
                       <Badge className="ml-auto" variant="outline">
-                        Art
+                        Backend
                       </Badge>
                     </div>
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8">
-                        <AvatarFallback>R</AvatarFallback>
+                        <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=adil_shaikh" />
+                        <AvatarFallback>AS</AvatarFallback>
                       </Avatar>
                       <div className="text-sm">
-                        <div className="font-medium">Rahul M.</div>
+                        <div className="font-medium">Adil Shaikh</div>
                         <div className="text-xs text-muted-foreground">1.2km away</div>
                       </div>
                       <Badge className="ml-auto" variant="outline">
-                        Tech
+                        Data Science
                       </Badge>
                     </div>
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8">
-                        <AvatarFallback>A</AvatarFallback>
+                        <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=harsh_sharma" />
+                        <AvatarFallback>HS</AvatarFallback>
                       </Avatar>
                       <div className="text-sm">
-                        <div className="font-medium">Anita K.</div>
+                        <div className="font-medium">Harsh Sharma</div>
                         <div className="text-xs text-muted-foreground">1.8km away</div>
                       </div>
                       <Badge className="ml-auto" variant="outline">
-                        Food
+                        Frontend
                       </Badge>
                     </div>
                   </div>
@@ -204,35 +223,37 @@ const Index = () => {
                     <div className="bg-background rounded-md p-3 border">
                       <div className="flex items-center gap-2 mb-1">
                         <Avatar className="h-6 w-6">
-                          <AvatarFallback>M</AvatarFallback>
+                          <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=sooraj_b" />
+                          <AvatarFallback>SB</AvatarFallback>
                         </Avatar>
-                        <div className="text-sm font-medium">Meera J.</div>
+                        <div className="text-sm font-medium">Sooraj B.</div>
                       </div>
                       <p className="text-sm">
-                        Does anyone know a good plumber in Koramangala? Need urgent help!
+                        Product manager meetup this Friday! Anyone interested in joining?
                       </p>
                       <div className="flex gap-2 mt-2">
                         <Badge variant="secondary" className="text-xs">
-                          Recommendations
+                          Events
                         </Badge>
-                        <span className="text-xs text-muted-foreground">5 replies</span>
+                        <span className="text-xs text-muted-foreground">8 replies</span>
                       </div>
                     </div>
                     <div className="bg-background rounded-md p-3 border">
                       <div className="flex items-center gap-2 mb-1">
                         <Avatar className="h-6 w-6">
-                          <AvatarFallback>V</AvatarFallback>
+                          <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=manish_kumar" />
+                          <AvatarFallback>MK</AvatarFallback>
                         </Avatar>
-                        <div className="text-sm font-medium">Vijay S.</div>
+                        <div className="text-sm font-medium">Manish Kumar</div>
                       </div>
                       <p className="text-sm">
-                        There's a water shortage expected tomorrow in HSR Layout. Stock up!
+                        Traffic alert: MG Road closure for metro work. Use alternate routes!
                       </p>
                       <div className="flex gap-2 mt-2">
                         <Badge variant="secondary" className="text-xs">
                           Alert
                         </Badge>
-                        <span className="text-xs text-muted-foreground">12 replies</span>
+                        <span className="text-xs text-muted-foreground">15 replies</span>
                       </div>
                     </div>
                   </div>
@@ -253,11 +274,20 @@ const Index = () => {
                           <span className="text-xs font-medium">APR</span>
                           <span className="text-sm font-bold">20</span>
                         </div>
-                        <div>
+                        <div className="flex-1">
                           <h4 className="text-sm font-medium">Weekend Farmers Market</h4>
                           <div className="flex items-center text-xs text-muted-foreground mt-1">
                             <MapPin className="h-3 w-3 mr-1" />
                             <span>Cubbon Park</span>
+                          </div>
+                          <div className="flex items-center gap-2 mt-2">
+                            <Avatar className="h-5 w-5">
+                              <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=adil_shaikh" />
+                              <AvatarFallback>AS</AvatarFallback>
+                            </Avatar>
+                            <span className="text-xs text-muted-foreground">
+                              Organized by Adil Shaikh
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -268,11 +298,20 @@ const Index = () => {
                           <span className="text-xs font-medium">APR</span>
                           <span className="text-sm font-bold">22</span>
                         </div>
-                        <div>
+                        <div className="flex-1">
                           <h4 className="text-sm font-medium">Tech Networking Mixer</h4>
                           <div className="flex items-center text-xs text-muted-foreground mt-1">
                             <MapPin className="h-3 w-3 mr-1" />
                             <span>The Leela, Indiranagar</span>
+                          </div>
+                          <div className="flex items-center gap-2 mt-2">
+                            <Avatar className="h-5 w-5">
+                              <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=harsh_sharma" />
+                              <AvatarFallback>HS</AvatarFallback>
+                            </Avatar>
+                            <span className="text-xs text-muted-foreground">
+                              Organized by Harsh Sharma
+                            </span>
                           </div>
                         </div>
                       </div>
