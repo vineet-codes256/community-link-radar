@@ -1,60 +1,53 @@
-# Nearby Connect
+# Nearby Connect Vision Demo
 
-## Project info
+This repository hosts the **vision demo** for Nearby Connect – a conceptual, illustrative UI showing what the platform experience will feel like once fully implemented. It is **not** the production or alpha codebase. Most dynamic features (real-time nearby discovery, community posts, events, authentication flows, messaging) are mocked or non-functional here.
 
-This is the **Nearby Connect** project, a moonshot initiative by Rawat Innovations Pvt. Ltd., an emerging startup founded in May 2025.
+## Live Alpha Access
 
-## How can I edit this code?
+The real working alpha (iteratively evolving) is available at:
 
-You can edit your application in several ways:
+- [Web Alpha](https://nearbyconnect-v004.vercel.app/)
+- [Android App (Play Store)](https://play.google.com/store/apps/details?id=com.rawatinnovations.nearbyconnect)
+- iOS App: Coming Soon
 
-**Use your preferred IDE**
+## What This Demo Shows
 
-Clone this repo and push changes.  
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Vision for landing page, feature cards, testimonials
+- Conceptual nearby people, events, community board panels (mock data)
+- Styling system with Tailwind + shadcn/ui components
+- Dark/light theme capability (theming primitives)
 
-Follow these steps:
+## What It Does Not Provide
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Live location-based matching
+- Real user accounts or secure auth flows
+- Real-time messaging or notifications
+- Event creation / community posting back-end
+- Map or geospatial visualization
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Purpose
 
-# Step 3: Install the necessary dependencies.
-npm i
+Helps stakeholders, designers, and contributors visualize the direction of the product while core functionality is developed separately.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## Alpha vs Vision Separation
+
+If you're looking to contribute to functional features, work against the active alpha deployed at the links above (different repo/codebase). This vision demo may be periodically refreshed to reflect UI direction only.
+
+## Quick Start (Demo Only)
+
+```bash
+pnpm install
+pnpm dev
 ```
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
+## Tech Stack
 
 - Vite
 - TypeScript
 - React
-- shadcn-ui
 - Tailwind CSS
+- shadcn/ui
 
-## Copyright
+## License
 
-All copyrights are reserved with Rawat Innovations Private Limited.
-
-# Test comment for Husky
+Copyright © 2025 Rawat Innovations Pvt. Ltd. All rights reserved. This demo is proprietary; do not redistribute without permission.

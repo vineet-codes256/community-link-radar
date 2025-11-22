@@ -105,6 +105,40 @@ const Index = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Vision Demo Banner / Live Alpha Links */}
+      <div
+        className="bg-yellow-50 dark:bg-yellow-950 border-b border-yellow-300 dark:border-yellow-800 py-3 text-center"
+        role="note"
+        aria-label="Vision demo notice and live alpha links"
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-center justify-center text-sm">
+            <span className="font-semibold text-yellow-900 dark:text-yellow-100">
+              Vision Demo Only
+            </span>
+            <span className="text-yellow-800 dark:text-yellow-200">
+              The real live Alpha is available:
+            </span>
+            <a
+              href="https://nearbyconnect-v004.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-dotted text-primary font-medium hover:decoration-solid"
+            >
+              Web Alpha
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.rawatinnovations.nearbyconnect"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-dotted text-primary font-medium hover:decoration-solid"
+            >
+              Android App
+            </a>
+            <span className="italic text-yellow-700 dark:text-yellow-300">iOS Coming Soon</span>
+          </div>
+        </div>
+      </div>
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 -z-10" />
@@ -533,19 +567,43 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-muted py-12">
+      <footer className="bg-muted py-12 border-t">
         <div className="container">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
-                <MapPin className="h-4 w-4 text-primary-foreground" />
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-wrap gap-6 justify-between items-center">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
+                  <MapPin className="h-4 w-4 text-primary-foreground" />
+                </div>
+                <span className="font-bold text-lg">Nearby Connect</span>
               </div>
-              <span className="font-bold text-lg">Nearby Connect</span>
+              <div className="flex flex-wrap gap-4 text-sm">
+                <div className="flex flex-col md:flex-row gap-2 md:items-center">
+                  <span className="font-medium">Live Alpha:</span>
+                  <a
+                    href="https://nearbyconnect-v004.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    Web
+                  </a>
+                  <a
+                    href="https://play.google.com/store/apps/details?id=com.rawatinnovations.nearbyconnect"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    Android
+                  </a>
+                  <span className="text-muted-foreground italic">iOS Soon</span>
+                </div>
+              </div>
             </div>
-
-            <p className="text-sm text-muted-foreground">
-              © 2025 Nearby Connect. All rights reserved.
-            </p>
+            <div className="flex justify-between items-center text-xs text-muted-foreground">
+              <p>© 2025 Nearby Connect. Vision Demo – features illustrated, not active.</p>
+              <p>Rawat Innovations Pvt. Ltd.</p>
+            </div>
           </div>
         </div>
       </footer>

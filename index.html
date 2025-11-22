@@ -122,7 +122,39 @@
   </head>
 
   <body>
+    <!-- Vision Demo Fallback: If the React app fails to load, show alpha links -->
     <div id="root"></div>
+    <noscript>
+      <div
+        style="
+          padding: 1rem;
+          margin: 0.5rem;
+          border: 1px solid #eab308;
+          background: #fefce8;
+          font-family: system-ui, sans-serif;
+          border-radius: 8px;
+        "
+      >
+        <strong>Nearby Connect Vision Demo:</strong> JavaScript is disabled. The interactive demo
+        cannot load.<br />
+        Access the live Alpha instead:
+        <a
+          href="https://nearbyconnect-v004.vercel.app/"
+          target="_blank"
+          rel="noopener"
+          style="color: #2563eb; text-decoration: underline; margin-left: 4px"
+          >Web Alpha</a
+        >
+        <a
+          href="https://play.google.com/store/apps/details?id=com.rawatinnovations.nearbyconnect"
+          target="_blank"
+          rel="noopener"
+          style="color: #2563eb; text-decoration: underline; margin-left: 8px"
+          >Android App</a
+        >
+        <em style="display: block; margin-top: 4px; color: #854d0e">iOS App Coming Soon</em>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
